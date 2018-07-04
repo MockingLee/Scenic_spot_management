@@ -5,6 +5,8 @@
       <option name="ignoredIdentifiers">
         <list>
           <option value="static.graph.name" />
+          <option value="fun.graph.quick_sort" />
+          <option value="fun.graph.partition" />
         </list>
       </option>
     </inspection_tool>
