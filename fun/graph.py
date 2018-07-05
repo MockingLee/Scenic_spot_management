@@ -1,3 +1,6 @@
+import operator
+
+
 class Graph:
     edge = {}
     edgeinfo = {}
@@ -23,16 +26,37 @@ class Graph:
 
     def getSortResult(self):
         arr = self.getNodeArr()
-        self.quick_sort(arr, 0, len(arr)-1)
-        return arr
+        self.quick_sort(arr, 0, len(arr) - 1)
 
-    def quick_sort(self,array, l, r):
+        return sorted(self.edgeinfo.items(), key=lambda x: x['popularity'], reverse=True)
+
+    def bubble_sort(self):
+
+        for i in self.edgeinfo:
+            print(i)
+
+    def selectSort(self):
+        dict = self.edgeinfo
+        result = {}
+        size = len(dict)
+        for i in range(size):
+            last_value = 0
+            last_key = None
+            for (key, value) in dict.items():
+                if int(value['popularity']) > int(last_value):
+                    last_value = value['popularity']
+                    last_key = key
+            dict.pop(last_key)
+            result[last_key] = {'popularity': last_value}
+        return result
+
+    def quick_sort(self, array, l, r):
         if l < r:
             q = self.partition(array, l, r)
             self.quick_sort(array, l, q - 1)
             self.quick_sort(array, q + 1, r)
 
-    def partition(self,array, l, r):
+    def partition(self, array, l, r):
         x = array[r]
         i = l - 1
         for j in range(l, r):
@@ -48,8 +72,11 @@ class Graph:
             arr.append(int(self.edgeinfo[i]['popularity']))
         return arr
 
-    def getNodeInfo(self,key):
+    def getNodeInfo(self, key):
         if key in self.edgeinfo:
             return self.edgeinfo[key]
         else:
             return False
+
+    def getMatrix(self):
+        result = []

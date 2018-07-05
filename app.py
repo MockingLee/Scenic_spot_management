@@ -38,8 +38,8 @@ def search():
 
 @app.route('/rank',methods=['GET'])
 def rank():
-    result = initial.g.getSortResult()
-    return
+    result = initial.g.selectSort()
+    return render_template("rankResult.html",dict = result)
 
 
 if __name__ == '__main__':
