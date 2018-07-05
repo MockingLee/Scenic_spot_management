@@ -1,5 +1,4 @@
-import operator
-
+import sys
 
 class Graph:
     edge = {}
@@ -25,18 +24,15 @@ class Graph:
         return self.edgeinfo[name]
 
     def getSortResult(self):
-        arr = self.getNodeArr()
+        arr = self.getNodeArr().copy()
         self.quick_sort(arr, 0, len(arr) - 1)
 
         return sorted(self.edgeinfo.items(), key=lambda x: x['popularity'], reverse=True)
 
-    def bubble_sort(self):
 
-        for i in self.edgeinfo:
-            print(i)
 
     def selectSort(self):
-        dict = self.edgeinfo
+        dict = self.edgeinfo.copy()
         result = {}
         size = len(dict)
         for i in range(size):
@@ -73,10 +69,42 @@ class Graph:
         return arr
 
     def getNodeInfo(self, key):
-        if key in self.edgeinfo:
-            return self.edgeinfo[key]
-        else:
-            return False
+        result = {}
+        for (k,v) in self.edgeinfo.items():
+            if key in k or key in v['description']:
+                result[k] = self.edgeinfo[k]
+        return result
+
+
 
     def getMatrix(self):
+        nodeArr = []
         result = []
+        for i in self.edgeinfo:
+            nodeArr.append(i)
+        for i in range(0,len(nodeArr)):
+            lineArr = []
+            for j in range(0,len(nodeArr)):
+                if i == j:
+                    lineArr.append(0)
+                else:
+                    if nodeArr[j] in self.edge[nodeArr[i]]:
+                        lineArr.append(self.edge[nodeArr[i]][nodeArr[j]])
+                    else:
+                        lineArr.append(sys.maxsize)
+            result.append(lineArr)
+        return result
+
+
+    def deleteNode(self,name):
+        self.edgeinfo.pop(name)
+        self.edge.pop(name)
+        for (k,v) in self.edge.items():
+            if name in v:
+                v.pop(name)
+
+    def checkNodeExist(self,name):
+        if name in self.edgeinfo:
+            return True
+        else:
+            return False

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/bootstrap.css">
+    <script src="/static/js/bootstrap.js"></script>
+    <script src="/static/js/jquery-3.3.1.min.js"></script>
+</head>
+<body>
+
+<table class="table table-hover">
+	<caption>悬停表格布局</caption>
+	<thead>
+		<tr>
+            <th>结点</th>
+            {% for i in nodeArr %}
+			<th>{{ i }}</th>
+			{% endfor %}
+		</tr>
+	</thead>
+	<tbody>
+    {% for i in range(0,size) %}
+
+		<tr>
+			<td>{{ nodeArr[i] }}</td>
+            {%  for j in range(0,size) %}
+			<td>{{ mapArr[i][j] }}</td>
+			{% endfor %}
+		</tr>
+		{% endfor %}
+	</tbody>
+</table>
+
+</body>
+</html>

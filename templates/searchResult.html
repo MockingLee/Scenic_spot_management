@@ -15,15 +15,18 @@
     <div class="col-sm-3"></div>
     <div class="col-sm-6">
         <div class="panel panel-primary">
+            {% for i in dict %}
             <div class="panel-heading">
-                <h3 class="panel-title">{{ name }}</h3>
+                <h3 class="panel-title">{{ i }}</h3>
             </div>
             <div class="panel-body">
-                <label>描述 {{ dict['description'] }}</label><br>
-                <label>欢迎程度 {{ dict['popularity'] }}</label><br>
-                <label>休息区 {{ dict['rest_zone'] }}</label><br>
-                <label>公厕 {{ dict['toilet'] }}</label><br>
+                <label>描述 {{ dict[i]['description'] }}</label><br>
+                <label>欢迎程度 {{ dict[i]['popularity'] }}</label><br>
+                <label>休息区 {{ dict[i]['rest_zone'] }}</label><br>
+                <label>公厕 {{ dict[i]['toilet'] }}</label><br>
             </div>
+            <div style="height: 10px;"></div>
+            {% endfor %}
         </div>
     </div>
     <div class="col-sm-3"></div>

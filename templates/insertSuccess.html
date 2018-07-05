@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/bootstrap.css">
+    <script src="/static/js/jquery-3.3.1.min.js"></script>
+    <script src="/static/js/bootstrap.js"></script>
+
+</head>
+<body>
+<div class="container">
+
+    <div class="col-sm-3"></div>
+    <div class="col-sm-6">
+
+       <h2>
+            Operate Success!
+        </h2>
+
+        <div class="container clearfix">
+    <div class="col-sm-3"></div>
+    <div class="col-sm-6">
+        <div class="col-lg-6">
+				<div class="input-group">
+
+					<span class="input-group-btn">
+                        <form action="addEdge" method="get">
+                            <input type="text" class="form-control" id="input" name="name" value="{{ name }}">
+                            <input type="text" class="form-control" id="input" name="dest">
+                            <input type="text" class="form-control" id="input" name="weight">
+						<button class="btn btn-default" type="submit" id="search">
+							add
+						</button>
+                            </form>
+					</span>
+				</div><!-- /input-group -->
+        </div><!-- /.col-lg-6 -->
+    </div>
+    <div class="col-sm-3"></div>
+</div>
+
+    </div>
+    <div class="col-sm-3"></div>
+
+</div>
+</body>
+</html>
