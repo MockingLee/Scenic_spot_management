@@ -53,7 +53,14 @@ def addEdge(name,dest,weight):
                 return True
     return False
 
+def getShortestPath(start,end):
+    print(start,end)
+    if g.checkNodeExist(start) and g.checkNodeExist(end):
+        return g.shortest_Path(start,end)
+    else:
+        return -1
+
 
 fileReader("./static/node_data.txt", "./static/edge_data.txt")
-g.showGraph()
+
 

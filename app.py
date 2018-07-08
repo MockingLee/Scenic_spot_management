@@ -83,6 +83,18 @@ def addEdge():
     else:
         return render_template("error.html")
 
+@app.route('/shortest',methods=['GET'])
+def shortest():
+    start = request.args['start']
+    end = request.args['end']
+    result = initial.getShortestPath(start,end)
+    if result == -1:
+        return render_template("error.html")
+    else:
+        return render_template("pathResult.html",dict = result)
+
+
+
 
 if __name__ == '__main__':
     app.run()

@@ -1,5 +1,6 @@
 import sys
 
+
 class Graph:
     edge = {}
     edgeinfo = {}
@@ -28,8 +29,6 @@ class Graph:
         self.quick_sort(arr, 0, len(arr) - 1)
 
         return sorted(self.edgeinfo.items(), key=lambda x: x['popularity'], reverse=True)
-
-
 
     def selectSort(self):
         dict = self.edgeinfo.copy()
@@ -70,21 +69,19 @@ class Graph:
 
     def getNodeInfo(self, key):
         result = {}
-        for (k,v) in self.edgeinfo.items():
+        for (k, v) in self.edgeinfo.items():
             if key in k or key in v['description']:
                 result[k] = self.edgeinfo[k]
         return result
-
-
 
     def getMatrix(self):
         nodeArr = []
         result = []
         for i in self.edgeinfo:
             nodeArr.append(i)
-        for i in range(0,len(nodeArr)):
+        for i in range(0, len(nodeArr)):
             lineArr = []
-            for j in range(0,len(nodeArr)):
+            for j in range(0, len(nodeArr)):
                 if i == j:
                     lineArr.append(0)
                 else:
@@ -95,16 +92,76 @@ class Graph:
             result.append(lineArr)
         return result
 
-
-    def deleteNode(self,name):
+    def deleteNode(self, name):
         self.edgeinfo.pop(name)
         self.edge.pop(name)
-        for (k,v) in self.edge.items():
+        for (k, v) in self.edge.items():
             if name in v:
                 v.pop(name)
 
-    def checkNodeExist(self,name):
+    def checkNodeExist(self, name):
         if name in self.edgeinfo:
             return True
         else:
             return False
+
+    def shortest_Path(self, s, e):
+        nodeArr = []
+        for i in self.edgeinfo:
+            nodeArr.append(i)
+        dist = [0 for i in nodeArr]
+        path = [0 for i in nodeArr]
+        set = [0 for i in nodeArr]
+        v = -1
+        for i in range(0, len(nodeArr)):
+            if nodeArr[i] == s:
+                v = i
+        matrix = self.getMatrix()
+        for i in range(0, len(nodeArr)):
+            dist[i] = matrix[v][i]
+            set[i] = False
+            if i != v and int(dist[i]) < sys.maxsize:
+                path[i] = v
+            else:
+                path[i] = -1
+        set[v] = True
+        dist[v] = 0
+        for i in range(0, len(nodeArr) - 1):
+            min = sys.maxsize
+            u = v
+            for j in range(0, len(nodeArr)):
+                if not set[j] and int(dist[j]) < int(min):
+                    u = j
+                    min = dist[j]
+                set[u] = True
+                for w in range(0, len(nodeArr)):
+                    if not set[w] and int(matrix[u][w]) < sys.maxsize and int(dist[u]) + int(matrix[u][w]) < int(
+                            dist[w]):
+                        (dist[w]) = int(dist[u]) + int(matrix[u][w])
+                        path[w] = u
+        end_num = -1
+        for i in range(0, len(nodeArr)):
+            if nodeArr[i] == e:
+                end_num = i
+
+        # trace back
+
+        shortest_path = []
+        trace_num = end_num
+        shortest_path.append(end_num)
+        while True:
+            if path[trace_num] == -1:
+                break
+            shortest_path.append(path[trace_num])
+            trace_num = path[trace_num]
+
+        result = {}
+        if len(shortest_path) == 1:
+            result[nodeArr[shortest_path[0]]] = {"dest": nodeArr[shortest_path[0]], "weight": 0}
+        for i in range(0, len(shortest_path) - 1):
+            result[nodeArr[shortest_path[len(shortest_path) - 1 - i]]] = {
+                "dest": nodeArr[shortest_path[len(shortest_path) - i - 1 - 1]],
+                "weight": matrix[shortest_path[len(shortest_path) - i - 1]][
+                    shortest_path[len(shortest_path) - i - 1 - 1]]}
+        return result
+
