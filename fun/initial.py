@@ -62,5 +62,7 @@ def getShortestPath(start,end):
 
 
 fileReader("./static/node_data.txt", "./static/edge_data.txt")
+print(g.primToPath("狮子山"))
+print(g.getRoute("狮子山"))
 
 

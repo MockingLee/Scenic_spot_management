@@ -165,3 +165,63 @@ class Graph:
                     shortest_path[len(shortest_path) - i - 1 - 1]]}
         return result
 
+    def prim(self,root):
+        res = []
+        map = self.getMatrix()
+        numRoot = 0
+        for i in self.edgeinfo:
+            if i == root:
+                break
+            numRoot += 1
+
+        seleted_node = [numRoot]
+        candidate_node = []
+        for i in range(0, len(self.edgeinfo)):
+            if i != numRoot:
+                candidate_node.append(i)
+
+
+        while len(candidate_node) > 0:
+            begin, end, minweight = 0, 0, sys.maxsize
+            for i in seleted_node:
+                for j in candidate_node:
+                    if int(map[i][j]) < minweight:
+                        minweight = int(map[i][j])
+                        begin = i
+                        end = j
+            res.append([begin, end, minweight])
+            seleted_node.append(end)
+            candidate_node.remove(end)
+        return res
+
+    def primToPath(self,start):
+        pathArr = []
+        primArr = self.prim(start)
+        currentNode = primArr[0][0]
+        set = []
+        for i in primArr:
+            set.append(False)
+        for i in range(0,len(primArr)):
+            currentNode = primArr[0][0]
+            for j in range(0,len(primArr)):
+                if not set[j]:
+                    if primArr[j][0] == currentNode:
+                        pathArr.append(primArr[j])
+                        currentNode = primArr[j][1]
+                        set[j] = True
+        return pathArr
+
+    def getRoute(self,start):
+        path = self.primToPath(start)
+        nodePathArr = []
+        nodePathArr.append(path[0][0])
+        for i in path:
+            nodePathArr.append(i[1])
+        result = []
+        nodeArr = []
+        for i in self.edgeinfo:
+            nodeArr.append(i)
+        for i in range(0,len(nodePathArr) -1):
+            result.append(self.shortest_Path(nodeArr[nodePathArr[i]] , nodeArr[nodePathArr[i+1]]))
+        result.append(self.shortest_Path(nodeArr[nodePathArr[i+1]] , nodeArr[nodePathArr[0]]))
+        return result
