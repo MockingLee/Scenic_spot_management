@@ -1,7 +1,11 @@
 from fun.graph import *
-
+from fun.stack import *
+from fun.queue import *
+import datetime
 g = Graph()
-
+port = Stack(10)
+quit = Stack(10)
+wait = Queue()
 
 def fileReader(node_file_name, edge_file_name):
     node_file = open(node_file_name, encoding='UTF-8')
@@ -60,9 +64,44 @@ def getShortestPath(start,end):
     else:
         return -1
 
+def getRoute(start):
+    if not g.checkNodeExist(start):
+        return False
+    else:
+        return g.getRoute(start)
+
+
+def carIn(car): ## use dict act as car data struct
+    if not port.isFull():
+        car['timeIn'] = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        port.push(car)
+    else:
+        wait.enqueue(car)
+
+def carOut(carNumber):
+    if not port.checkExist(carNumber):
+        return False
+    while True:
+        current = port.pop()
+        if current['num'] == carNumber:
+            break
+        quit.push(current)
+
+    current['timeOut'] = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+
+
+    while not quit.isEmpty():
+        port.push(quit.pop())
+
+    if not wait.is_empty():
+        inItem = wait.dequeue()
+        inItem['timeIn'] = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        port.push(inItem)
+
+    return current
 
 fileReader("./static/node_data.txt", "./static/edge_data.txt")
-print(g.primToPath("狮子山"))
-print(g.getRoute("狮子山"))
+route = getRoute("北门")
+
 
 

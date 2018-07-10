@@ -93,6 +93,29 @@ def shortest():
     else:
         return render_template("pathResult.html",dict = result)
 
+@app.route('/route',methods=['GET'])
+def route():
+    start = request.args['name']
+    result = initial.getRoute(start)
+    if not result:
+        return render_template("error.html")
+    else:
+        return render_template("routeResult.html", dict=result)
+
+@app.route('/parking',methods = ['GET'])
+def parking():
+    return render_template("parking,html")
+
+@app.route('/carIn',methods = ['GET'])
+def carIn():
+    initial.carIn(request.args['num'])
+    return
+
+@app.route('/carOut',methods = ['GET'])
+def carOut():
+    num = request()
+
+
 
 
 
