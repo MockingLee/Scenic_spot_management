@@ -72,6 +72,7 @@ def getRoute(start):
 
 
 def carIn(car): ## use dict act as car data struct
+    print(car)
     if not port.isFull():
         car['timeIn'] = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         port.push(car)
@@ -100,8 +101,15 @@ def carOut(carNumber):
 
     return current
 
-fileReader("./static/node_data.txt", "./static/edge_data.txt")
-route = getRoute("北门")
+def portState():
+    return port.getArr()
 
+def waitState():
+    return wait.getArr()
+
+
+fileReader("./static/node_data.txt", "./static/edge_data.txt")
+
+print(g.prim("北门"))
 
 

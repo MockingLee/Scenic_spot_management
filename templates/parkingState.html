@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/bootstrap.css">
+    <script src="/static/js/bootstrap.js"></script>
+    <script src="/static/js/jquery-3.3.1.min.js"></script>
+</head>
+<body>
+<div class="container clearfix">
+
+<div class="container">
+    <div style="height: 200px;"></div>
+    <div class="col-sm-4"></div>
+    <div class="col-sm-4">
+        <h2>
+            Parking lot state:
+        </h2>
+    <div class="panel-body">
+        <h3>Parking Head</h3>
+        {% for i in port %}
+            {% if i != {} %}
+        <label>Car num : {{ i['num'] }}   time in : {{ i['timeIn'] }}</label><br>
+            {% endif %}
+        {% endfor %}
+    <h3>Parking Tail</h3>
+
+    <div style="height: 20px;"></div>
+
+    <div class="panel-body">
+        <h3>Waiting Head</h3>
+        {% for i in wait %}
+        {% if i != {} %}
+        <label>Car num : {{ i['num'] }}  </label><br>
+        {% endif %}
+        {% endfor %}
+    <h3>Waiting Tail</h3>
+
+    </div>
+    </div>
+    <div class="col-sm-4"></div>
+
+</div>
+
+</div>
+</body>
+</html>

@@ -1,5 +1,6 @@
 from fun import initial
 from flask import *
+import datetime
 from app import app
 
 
@@ -104,18 +105,38 @@ def route():
 
 @app.route('/parking',methods = ['GET'])
 def parking():
-    return render_template("parking,html")
+    return render_template("parking.html")
 
 @app.route('/carIn',methods = ['GET'])
 def carIn():
-    initial.carIn(request.args['num'])
-    return
+    dict = {'num':request.args['num']}
+    initial.carIn(dict)
+    return render_template("parking.html")
 
 @app.route('/carOut',methods = ['GET'])
 def carOut():
-    num = request()
+    num = request.args['num']
+    result = initial.carOut(num)
+    if not result:
+        return render_template("error.html")
+    timeIn = datetime.datetime.strptime(result['timeIn'] ,'%Y-%m-%d %H:%M:%S')
+    timeOut = datetime.datetime.strptime(result['timeOut'], '%Y-%m-%d %H:%M:%S')
+    seconds = ((timeOut - timeIn).seconds)
+
+    min = int(seconds/60)
+    s = seconds%60
+    halfHour = min % 30
+    if halfHour == 0:
+        money = 5
+        return render_template("outResult.html", min=min, seconds=s , money = money)
+    money = halfHour * 5
+    return render_template("outResult.html", min=min, seconds=s , money = money)
 
 
+
+@app.route('/parkState',methods = ['GET'])
+def parkingState():
+    return render_template("parkingState.html",port = initial.portState(),wait = initial.waitState())
 
 
 
