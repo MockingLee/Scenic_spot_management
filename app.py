@@ -1,7 +1,10 @@
 from fun import initial
 from flask import *
 import datetime
+import pymysql
 from app import app
+from gevent.pywsgi import WSGIServer
+
 
 
 app = Flask(__name__)
@@ -41,7 +44,6 @@ def search():
 def rank():
     initial.g.showGraph()
     result = initial.g.selectSort()
-    print(result)
     return render_template("rankResult.html",dict = result)
 
 @app.route('/map',methods=['GET'])
@@ -128,8 +130,10 @@ def carOut():
     halfHour = min % 30
     if halfHour == 0:
         money = 5
+        initial.carUpdateCost(num, money)
         return render_template("outResult.html", min=min, seconds=s , money = money)
     money = halfHour * 5
+    initial.carUpdateCost(num, money)
     return render_template("outResult.html", min=min, seconds=s , money = money)
 
 
@@ -141,4 +145,5 @@ def parkingState():
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(host='0.0.0.0',threaded=True)
+
