@@ -1,9 +1,17 @@
+# -*- coding: utf-8 -*-
 from fun import initial
 from flask import *
 import datetime
 import pymysql
 from app import app
-from gevent.pywsgi import WSGIServer
+import importlib
+
+import sys
+importlib.reload(sys)
+sys.setdefaultencoding('utf-8')
+
+
+
 
 
 
@@ -141,6 +149,10 @@ def carOut():
 @app.route('/parkState',methods = ['GET'])
 def parkingState():
     return render_template("parkingState.html",port = initial.portState(),wait = initial.waitState())
+
+@app.route('/',methods=['GET'])
+def user():
+    return render_template("user.html")
 
 
 

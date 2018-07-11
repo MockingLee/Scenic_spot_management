@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import pymysql
 
 db = pymysql.connect("45.76.223.233", "root", "root", "scenic")
