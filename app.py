@@ -6,12 +6,6 @@ import pymysql
 from app import app
 import importlib
 
-import sys
-importlib.reload(sys)
-sys.setdefaultencoding('utf-8')
-
-
-
 
 
 
